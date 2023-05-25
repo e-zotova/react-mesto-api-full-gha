@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP 158.160.26.167, passphrase is ...
+IP 158.160.26.167
 
 Frontend https://ezotova.nomoredomains.rocks/
 
