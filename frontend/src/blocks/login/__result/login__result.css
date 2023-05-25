@@ -1,0 +1,14 @@
+.login__result {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 630px) {
+  .login__result {
+    margin-top: 50px;
+  }
+}
