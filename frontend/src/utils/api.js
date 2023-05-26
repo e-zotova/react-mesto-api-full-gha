@@ -43,7 +43,6 @@ class Api {
   }
 
   getInitialCards() {
-
     return fetch(`${this._baseUrl}/cards`, {
       headers: {...this._headers, "Authorization" : `Bearer ${this._getJwt()}`},
     }).then(handleResponse);
