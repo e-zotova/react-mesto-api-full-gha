@@ -7,6 +7,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const router = require('./routes');
+require('dotenv').config();
 const handleErrorMiddleware = require('./middlewares/handleError');
 
 const limiter = rateLimit({
