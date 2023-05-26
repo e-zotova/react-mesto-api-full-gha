@@ -10,7 +10,7 @@ function Header({ userData: { email } }) {
     localStorage.removeItem("jwt");
     email = '';
     navigate("/sign-in");
-    window.location.reload();
+    navigate(0);
   }
 
   return (
