@@ -8,7 +8,9 @@ function Header({ userData: { email } }) {
 
   function onSignOut() {
     localStorage.removeItem("jwt");
+    email = '';
     navigate("/sign-in");
+    window.location.reload();
   }
 
   return (
