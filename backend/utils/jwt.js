@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-const devsecret = 'someveryveryverysecretkey';
+const devsecret = 'secret-key';
 
 const secretToken = NODE_ENV === 'production' ? JWT_SECRET : devsecret;
 
