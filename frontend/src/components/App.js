@@ -51,7 +51,7 @@ function App() {
       }
     };
     tokenCheck();
-  }, [navigate]);
+  }, []);
 
   const handleLogin = (email) => {
     setLoggedIn(true);
