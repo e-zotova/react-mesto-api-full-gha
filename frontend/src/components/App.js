@@ -41,7 +41,7 @@ function App() {
         auth
           .getContent(token)
           .then((res) => {
-            let email = res.data.email;
+            let email = res.email;
             handleLogin({ email });
             navigate("/");
           })
