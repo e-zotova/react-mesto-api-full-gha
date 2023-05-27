@@ -18,11 +18,12 @@ const limiter = rateLimit({
 });
 
 const app = express();
-app.use(cors());
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(errorLogger);
 app.use(requestLogger);
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -33,7 +34,6 @@ app.get('/crash-test', () => {
 app.use(helmet());
 app.use(limiter);
 app.use(router);
-app.use(errorLogger);
 app.use(handleErrorMiddleware);
 
 app.listen(PORT, () => console.log('Server is started.'));
