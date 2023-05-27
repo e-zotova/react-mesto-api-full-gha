@@ -78,9 +78,6 @@ const getUserById = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        return next(new BadRequestError('Invalid user id'));
-      }
       if (err.name === 'DocumentNotFoundError') {
         return next(new NotFoundError('User is not found'));
       }
@@ -100,7 +97,7 @@ const updateUserInfo = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return next(new BadRequestError('Invalid user id'));
       }
       if (err.name === 'DocumentNotFoundError') {
@@ -122,7 +119,7 @@ const updateUserAvatar = (req, res, next) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'ValidationError') {
         return next(new BadRequestError('Invalid user id'));
       }
       if (err.name === 'DocumentNotFoundError') {
