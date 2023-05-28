@@ -31,7 +31,7 @@ const validateUserById = celebrate(
   },
 );
 
-const validateUpdateUserInfo = celebrate(
+const validateUpdateProfileInfo = celebrate(
   {
     body: Joi.object().keys({
       name: Joi.string().min(2).max(30).required(),
@@ -67,7 +67,7 @@ module.exports = {
   validateCreateUser,
   validateLoginUser,
   validateUserById,
-  validateUpdateUserInfo,
+  validateUpdateProfileInfo,
   validateUpdateAvatar,
   validateCreateCard,
   validateCardById,

@@ -6,6 +6,37 @@ const NotFoundError = require('../errors/not-found-error');
 const ConflictError = require('../errors/conflict-error');
 const BadRequestError = require('../errors/bad-request-error');
 
+const getUser = (id, res, next) => {
+  User.findById(id)
+    .orFail()
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        return next(new NotFoundError('User is not found'));
+      }
+      return next(err);
+    });
+};
+
+const updateUserData = (id, data, res, next) => {
+  User.findByIdAndUpdate(id, data, { new: true, runValidators: true })
+    .orFail()
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return next(new BadRequestError('Invalid user id'));
+      }
+      if (err.name === 'DocumentNotFoundError') {
+        return next(new NotFoundError('User is not found'));
+      }
+      return next(err);
+    });
+};
+
 const createUser = (req, res, next) => {
   const {
     email, password, name, about, avatar,
@@ -56,77 +87,31 @@ const getUsers = (req, res, next) => {
 };
 
 const getCurrentUser = (req, res, next) => {
-  User.findById(req.user.id)
-    .orFail()
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('User is not found'));
-      }
-      return next(err);
-    });
+  getUser(req.user.id, res, next);
 };
 
 const getUserById = (req, res, next) => {
-  const { userId } = req.params;
-
-  User.findById(userId)
-    .orFail()
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('User is not found'));
-      }
-      return next(err);
-    });
+  getUser(req.params.userId, res, next);
 };
 
-const updateUserInfo = (req, res, next) => {
+const updateProfileInfo = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(
+  updateUserData(
     req.user.id,
     { name, about },
-    { new: true, runValidators: true },
-  )
-    .orFail()
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Invalid user id'));
-      }
-      if (err.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('User is not found'));
-      }
-      return next(err);
-    });
+    res,
+    next,
+  );
 };
 
 const updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(
+  updateUserData(
     req.user.id,
     { avatar },
-    { new: true, runValidators: true },
-  )
-    .orFail()
-    .then((user) => {
-      res.send(user);
-    })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return next(new BadRequestError('Invalid user id'));
-      }
-      if (err.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('User is not found'));
-      }
-      return next(err);
-    });
+    res,
+    next,
+  );
 };
 
 module.exports = {
@@ -135,6 +120,6 @@ module.exports = {
   getUsers,
   getCurrentUser,
   getUserById,
-  updateUserInfo,
+  updateProfileInfo,
   updateUserAvatar,
 };
