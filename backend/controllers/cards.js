@@ -35,7 +35,7 @@ const deleteCardById = (req, res, next) => {
         return next(new ForbiddenError('It is not allowed to delete other user\'s card'));
       }
 
-      return Card.deleteOne(card).then(() => res.status(200).send(card));
+      return card.deleteOne().then(() => res.status(200).send(card));
     })
     .catch(next);
 };
